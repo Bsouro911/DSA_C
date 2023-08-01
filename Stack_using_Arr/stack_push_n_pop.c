@@ -43,6 +43,19 @@ int pop(struct stack *ptr){
     }
 }
 
+void display(struct stack *ptr){
+    if (isEmpty(ptr)) {
+        printf("Stack is empty!\n");
+    }
+    else {
+        printf("Stack elements: ");
+        for (int i = ptr->top; i >= 0; i--) {
+            printf("%d ", ptr->arr[i]);
+        }
+        printf("\n");
+    }
+}
+
 int main()
 {
     struct stack *s = (struct stack *) malloc(sizeof(struct stack));
@@ -57,7 +70,12 @@ int main()
     // printf("Empty: %d\n", isEmpty(s));
     // printf("Full: %d", isFull(s));
 
+    display(s);
+
     printf("Popped! %d from the stack", pop(s)); // last in forst out
+
+    free(s->arr);
+    free(s);
 
     return 0;
 }
