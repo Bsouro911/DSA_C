@@ -31,15 +31,15 @@ void push(struct stack *ptr, int val){
     }
 }
 
-int pop(struct stack *ptr){
+bool pop(struct stack *ptr){
      if(isEmpty(ptr)){
         printf("Stack Underflow!\n");
-        return -1;
+        return false;
     }
     else{
         int val = ptr -> arr[ptr -> top];
         ptr -> top--;
-        return val;
+        return true;
     }
 }
 
@@ -72,7 +72,8 @@ int main()
 
     display(s);
 
-    printf("Popped! %d from the stack", pop(s)); // last in forst out
+    pop(s);
+    printf("Popped! from the stack"); // last in forst out
 
     free(s->arr);
     free(s);
