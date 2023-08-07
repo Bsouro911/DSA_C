@@ -1,6 +1,6 @@
 ### DSA_C
 
-# topics include/will be included
+# Topics include/will be included
 - Linked Lists
 - Stack
 - Recursion
