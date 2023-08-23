@@ -51,38 +51,67 @@ bool isPalindromeSimple(struct Node *head)
 }
 
 // Function to check if the linked list is a palindrome using a stack
-bool isPalindromeStack(struct Node *head)
+// bool isPalindromeStack(struct Node *head)
+// {
+//     struct Node *slow = head;
+//     struct Node *fast = head;
+//     struct Node *stack = NULL;
+
+//     // Traverse the linked list to find the middle node
+//     while (fast != NULL && fast->next != NULL)
+//     {
+//         struct Node *newStackNode = newNode(slow->data); // Rename the variable here
+//         newStackNode->next = stack;
+//         stack = newStackNode;
+//         slow = slow->next;
+//         fast = fast->next->next;
+//     }
+
+//     // If the linked list has odd number of nodes, skip the middle node
+//     if (fast != NULL)
+//         slow = slow->next;
+
+//     // Compare the second half of the linked list with the elements in the stack
+//     while (slow != NULL)
+//     {
+//         if (slow->data != stack->data)
+//             return false;
+//         struct Node *temp = stack;
+//         stack = stack->next;
+//         free(temp);
+//         slow = slow->next;
+//     }
+
+//     return true;
+// }
+
+// check palindrome
+
+bool check(struct Node *head, struct Node **temp)
 {
-    struct Node *slow = head;
-    struct Node *fast = head;
-    struct Node *stack = NULL;
-
-    // Traverse the linked list to find the middle node
-    while (fast != NULL && fast->next != NULL)
+    if (head == NULL)
     {
-        struct Node *newStackNode = newNode(slow->data); // Rename the variable here
-        newStackNode->next = stack;
-        stack = newStackNode;
-        slow = slow->next;
-        fast = fast->next->next;
+        return true;
     }
 
-    // If the linked list has odd number of nodes, skip the middle node
-    if (fast != NULL)
-        slow = slow->next;
-
-    // Compare the second half of the linked list with the elements in the stack
-    while (slow != NULL)
+    if (!check(head->next, temp))
     {
-        if (slow->data != stack->data)
-            return false;
-        struct Node *temp = stack;
-        stack = stack->next;
-        free(temp);
-        slow = slow->next;
+        return false;
     }
 
+    if ((*temp)->data != head->data)
+    {
+        return false;
+    }
+
+    *temp = (*temp)->next;
     return true;
+}
+
+bool isPalindrome(struct Node *head)
+{
+    struct Node *temp = head;
+    check(head, &temp);
 }
 
 // Function to print the linked list
@@ -129,8 +158,8 @@ int main()
     freeLinkedList(head);
 
     // Create the same sample linked list for testing the stack implementation
-    head = newNode('t');
-    head->next = newNode('a');
+    head = newNode('a');
+    head->next = newNode('c');
     head->next->next = newNode('b');
     head->next->next->next = newNode('c');
     head->next->next->next->next = newNode('a');
@@ -138,7 +167,7 @@ int main()
     // Stack implementation
     printf("\nLinked list: ");
     printLinkedList(head);
-    if (isPalindromeStack(head))
+    if (isPalindrome(head))
         printf("Stack Implementation: The linked list is a palindrome.\n");
     else
         printf("Stack Implementation: The linked list is not a palindrome.\n");

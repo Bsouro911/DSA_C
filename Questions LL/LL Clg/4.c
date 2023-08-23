@@ -21,38 +21,35 @@ void insert(struct Node **head, int data)
     }
     else
     {
-        struct Node *temp = *head;
-        while (temp->next != NULL)
+        struct Node *curr = *head;
+        while (curr->next != NULL)
         {
-            temp = temp->next;
+            curr = curr->next;
         }
-        temp->next = newNode;
+        curr->next = newNode;
     }
 }
 
-// Function to merge two sorted linked lists
-struct Node *mergeSortedLists(struct Node *list1, struct Node *list2)
+// function to merge two sorted linked lists
+struct Node *mergeTwoLists(struct Node *l1, struct Node *l2)
 {
-    if (list1 == NULL)
-    {
-        return list2;
-    }
-    if (list2 == NULL)
-    {
-        return list1;
-    }
+    if (!l1)
+        return l2;
+    if (!l2)
+        return l1;
 
     struct Node *mergedList = NULL;
 
-    if (list1->data <= list2->data)
+    if (l1->data <= l2->data)
     {
-        mergedList = list1;
-        mergedList->next = mergeSortedLists(list1->next, list2);
+        mergedList = l1;
+        mergedList->next = mergeTwoLists(l1->next, l2);
     }
+
     else
     {
-        mergedList = list2;
-        mergedList->next = mergeSortedLists(list1, list2->next);
+        mergedList = l2;
+        mergedList->next = mergeTwoLists(l2->next, l1);
     }
 
     return mergedList;
@@ -79,6 +76,7 @@ int main()
     insert(&list1, 1);
     insert(&list1, 3);
     insert(&list1, 5);
+    insert(&list1, 5);
 
     // Insert elements into the second linked list
     insert(&list2, 2);
@@ -92,7 +90,7 @@ int main()
     printList(list2);
 
     // Merge the two sorted linked lists
-    struct Node *mergedList = mergeSortedLists(list1, list2);
+    struct Node *mergedList = mergeTwoLists(list1, list2);
 
     printf("Merged sorted linked list: ");
     printList(mergedList);

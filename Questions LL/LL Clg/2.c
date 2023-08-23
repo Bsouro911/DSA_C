@@ -17,22 +17,27 @@ struct Node *createNode(int data)
     return newNode;
 }
 
-// Function to reverse a linked list iteratively
-struct Node *reverseIterative(struct Node *head)
+// Reverse a linked list using iterative approach
+struct Node *reverse(struct Node *head)
 {
+    struct Node *curr = head;
     struct Node *prev = NULL;
-    struct Node *current = head;
     struct Node *next = NULL;
 
-    while (current != NULL)
+    if (head == NULL || head->next == NULL)
     {
-        next = current->next;
-        current->next = prev;
-        prev = current;
-        current = next;
+        return head;
     }
 
-    return prev; // New head of the reversed list
+    while (curr != NULL)
+    {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    return prev;
 }
 
 // Function to reverse a linked list recursively
@@ -82,7 +87,7 @@ int main()
     printf("Original linked list: ");
     printLinkedList(head);
 
-    struct Node *reversedIterative = reverseIterative(head);
+    struct Node *reversedIterative = reverse(head);
     printf("Reversed iterative: ");
     printLinkedList(reversedIterative);
 

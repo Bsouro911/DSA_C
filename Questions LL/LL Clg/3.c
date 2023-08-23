@@ -8,23 +8,23 @@ struct ListNode
     struct ListNode *next;
 };
 
-struct ListNode *findMiddleNode(struct ListNode *head)
+struct ListNode *middle(struct ListNode *head)
 {
-    if (head == NULL)
-        return NULL;
+    struct ListNode *fast = head;
+    struct ListNode *slow = head;
 
-    struct ListNode *slow_ptr = head;
-    struct ListNode *fast_ptr = head;
-
-    // Move slow_ptr by one node and fast_ptr by two nodes
-    // When fast_ptr reaches the end, slow_ptr will be at the middle
-    while (fast_ptr != NULL && fast_ptr->next != NULL)
+    if (head == NULL || head->next == NULL)
     {
-        slow_ptr = slow_ptr->next;
-        fast_ptr = fast_ptr->next->next;
+        return head;
     }
 
-    return slow_ptr;
+    while (fast != NULL && fast->next != NULL)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+
+    return slow;
 }
 
 // Helper function to create a new node
@@ -82,7 +82,7 @@ int main()
     printf("Original Linked List: ");
     printList(head);
 
-    struct ListNode *middleNode = findMiddleNode(head);
+    struct ListNode *middleNode = middle(head);
 
     if (middleNode != NULL)
     {

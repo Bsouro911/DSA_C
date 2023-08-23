@@ -8,8 +8,9 @@ struct Node
     struct Node *next;
 };
 
-// Function to create a new node with the given data
-struct Node *createNode(int data)
+// create a newNode
+
+struct Node *createNewNode(int data)
 {
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
     newNode->data = data;
@@ -17,71 +18,76 @@ struct Node *createNode(int data)
     return newNode;
 }
 
-// Function to insert a new node at the beginning of the linked list
-void insertAtBeginning(struct Node **head, int data)
+// insert a node at the begining
+
+void insertAt_begin(struct Node **head, int data)
 {
-    struct Node *newNode = createNode(data);
-    newNode->next = *head;
-    *head = newNode;
+    struct Node *insertNew = createNewNode(data);
+    insertNew->next = *head;
+    *head = insertNew;
 }
 
-// Function to insert a new node at the end of the linked list
-void insertAtEnd(struct Node **head, int data)
+// insert a node at the end
+
+void insertAt_end(struct Node **head, int data)
 {
-    struct Node *newNode = createNode(data);
+    struct Node *insertNew = createNewNode(data);
     if (*head == NULL)
     {
-        *head = newNode;
+        *head = insertNew;
         return;
     }
 
-    struct Node *current = *head;
-    while (current->next != NULL)
+    struct Node *curr = *head;
+    while (curr->next != NULL)
     {
-        current = current->next;
+        curr = curr->next;
     }
-    current->next = newNode;
+
+    curr->next = insertNew;
 }
 
-// Function to insert a new node at a specific position in the linked list
-void insertAtPosition(struct Node **head, int data, int position)
+// insert a node at any given position
+
+void insertAt_pos(struct Node **head, int data, int pos)
 {
-    if (position <= 0)
+    if (pos <= 0)
     {
-        insertAtBeginning(head, data);
+        insertAt_begin(head, data);
         return;
     }
 
-    struct Node *newNode = createNode(data);
-    struct Node *current = *head;
+    struct Node *insertNew = createNewNode(data);
+    struct Node *curr = *head;
 
-    for (int i = 1; i < position && current != NULL; i++)
+    for (int i = 1; i < pos && curr != NULL; i++)
     {
-        current = current->next;
+        curr = curr->next;
     }
 
-    if (current == NULL)
+    if (curr == NULL)
     {
-        // Position is beyond the end of the list
-        insertAtEnd(head, data);
+        insertAt_end(head, data);
     }
+
     else
     {
-        newNode->next = current->next;
-        current->next = newNode;
+        insertNew->next = curr->next;
+        curr->next = insertNew;
     }
 }
 
-// Function to print the linked list
-void printList(struct Node *head)
+// display the linked list
+
+void dispalyList(struct Node *head)
 {
-    struct Node *current = head;
-    while (current != NULL)
+    struct Node *curr = head;
+    while (curr != NULL)
     {
-        printf("%d -> ", current->data);
-        current = current->next;
+        printf("%d ->", curr->data);
+        curr = curr->next;
     }
-    printf("NULL\n");
+    printf("NULL");
 }
 
 // Function to free the memory occupied by the linked list
@@ -101,20 +107,20 @@ int main()
     struct Node *head = NULL;
 
     // Insert nodes at the beginning
-    insertAtBeginning(&head, 3);
-    insertAtBeginning(&head, 2);
-    insertAtBeginning(&head, 1);
+    insertAt_begin(&head, 3);
+    insertAt_begin(&head, 2);
+    // insertAtBeginning(&head, 1);
 
     // Insert nodes at the end
-    insertAtEnd(&head, 4);
-    insertAtEnd(&head, 5);
+    // insertAtEnd(&head, 4);
+    // insertAtEnd(&head, 5);
 
     // Insert node at a specific position
-    insertAtPosition(&head, 6, 2);
+    // insertAtPosition(&head, 6, 2);
 
     // Print the linked list
     printf("Linked List: ");
-    printList(head);
+    dispalyList(head);
 
     // Free the memory
     freeList(head);

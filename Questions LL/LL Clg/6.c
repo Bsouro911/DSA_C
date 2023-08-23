@@ -29,32 +29,6 @@ void deleteList(struct ListNode *head)
     }
 }
 
-struct ListNode *removeDuplicates(struct ListNode *head)
-{
-    if (head == NULL || head->next == NULL)
-    {
-        return head;
-    }
-
-    struct ListNode *current = head;
-
-    while (current->next != NULL)
-    {
-        if (current->val == current->next->val)
-        {
-            struct ListNode *duplicate = current->next;
-            current->next = current->next->next;
-            free(duplicate);
-        }
-        else
-        {
-            current = current->next;
-        }
-    }
-
-    return head;
-}
-
 void printList(struct ListNode *head)
 {
     struct ListNode *current = head;
@@ -68,28 +42,25 @@ void printList(struct ListNode *head)
     printf("NULL\n");
 }
 
-// Efficient implementation to remove duplicates in sorted linked list
-struct ListNode *removeDuplicatesEfficient(struct ListNode *head)
+// to remove all the duplicte nodes in a linked list
+struct ListNode *rvDuplicates(struct ListNode *head)
 {
     if (head == NULL || head->next == NULL)
     {
         return head;
     }
 
-    struct ListNode *current = head;
+    struct ListNode *curr = head;
 
-    while (current != NULL && current->next != NULL)
+    while (curr != NULL)
     {
-        if (current->val == current->next->val)
+        while (curr->next && curr->next->val == curr->val)
         {
-            struct ListNode *duplicate = current->next;
-            current->next = duplicate->next;
+            struct ListNode *duplicate = curr->next;
+            curr->next = duplicate->next;
             free(duplicate);
         }
-        else
-        {
-            current = current->next;
-        }
+        curr = curr->next;
     }
 
     return head;
@@ -109,7 +80,7 @@ int main()
     printList(head);
 
     // Remove duplicates from the list using the efficient version
-    head = removeDuplicatesEfficient(head);
+    head = rvDuplicates(head);
 
     printf("Linked List after removing duplicates: ");
     printList(head);

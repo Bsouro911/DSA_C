@@ -9,31 +9,30 @@ struct ListNode
     struct ListNode *next;
 };
 
-// Function to detect if a linked list contains a cycle
-bool hasCycle(struct ListNode *head)
+// check if a linked list contains a cuycle or not
+bool isCyclic(struct ListNode *head)
 {
+    // base case
     if (head == NULL || head->next == NULL)
     {
         return false;
     }
 
-    struct ListNode *slow = head;
     struct ListNode *fast = head;
+    struct ListNode *slow = head;
 
-    // Move slow pointer by one step and fast pointer by two steps
-    while (fast != NULL && fast->next != NULL)
+    while (fast && fast->next != NULL)
     {
         slow = slow->next;
         fast = fast->next->next;
 
-        // If slow and fast pointers meet, there is a cycle
         if (slow == fast)
         {
             return true;
         }
     }
 
-    return false; // If fast pointer reaches the end, there is no cycle
+    return false;
 }
 
 // Function to find the node at which the cycle starts
@@ -105,7 +104,7 @@ int main()
     node4->next = node2; // Creating a cycle, node4 points back to node2
 
     // Detect if the linked list contains a cycle
-    bool has_cycle = hasCycle(head);
+    bool has_cycle = isCyclic(head);
     if (has_cycle)
     {
         printf("The linked list contains a cycle.\n");
