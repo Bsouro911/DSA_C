@@ -15,13 +15,13 @@ struct Queue
 
 void initQ(struct Queue *);
 void enqueue(struct Queue *, int);
-int dequeue(struct Queue *);
+struct Node *dequeue(struct Queue *);
 void deA_queue(struct Queue *); // deallocates memory
 
 int main()
 {
     struct Queue Q;
-    int data;
+    struct Node *node;
 
     initQ(&Q);
     enqueue(&Q, 14);
@@ -29,27 +29,27 @@ int main()
     enqueue(&Q, 16);
     enqueue(&Q, 17);
 
-    data = dequeue(&Q);
-    if (data != -1)
-        printf("deleted element: %d\n", data);
+    node = dequeue(&Q);
+    if (node != NULL)
+        printf("deleted element: %d\n", node->data);
 
-    data = dequeue(&Q);
-    if (data != -1)
-        printf("deleted element: %d\n", data);
+    node = dequeue(&Q);
+    if (node != NULL)
+        printf("deleted element: %d\n", node->data);
 
-    data = dequeue(&Q);
-    if (data != -1)
-        printf("deleted element: %d\n", data);
+    node = dequeue(&Q);
+    if (node != NULL)
+        printf("deleted element: %d\n", node->data);
 
-    data = dequeue(&Q);
-    if (data != -1)
-        printf("deleted element: %d\n", data);
+    node = dequeue(&Q);
+    if (node != NULL)
+        printf("deleted element: %d\n", node->data);
 
-    data = dequeue(&Q);
-    if (data != -1)
-        printf("deleted element: %d\n", data);
+    node = dequeue(&Q);
+    if (node != NULL)
+        printf("deleted element: %d\n", node->data);
 
-    // deA_queue(&Q);
+    deA_queue(&Q);
     return 0;
 }
 
@@ -80,22 +80,19 @@ void enqueue(struct Queue *q, int val)
     q->rear = temp;
 }
 
-int dequeue(struct Queue *q)
+struct Node *dequeue(struct Queue *q)
 {
     struct Node *temp;
-    int val;
 
     if (q->front == NULL)
     {
-        printf("Queue is Empty!");
-        return -1;
+        printf("Queue is Empty!\n");
+        return NULL;
     }
 
-    val = q->front->data;
     temp = q->front;
     q->front = q->front->next;
-    free(temp);
-    return val;
+    return temp;
 }
 
 void deA_queue(struct Queue *q)
