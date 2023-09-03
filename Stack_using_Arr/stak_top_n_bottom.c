@@ -6,10 +6,9 @@ struct stack
     int size;
     int top;
     int *arr;
-}
+};
 
-int
-stackTop(struct stack *s)
+int stackTop(struct stack *s)
 {
     return s->arr[s->top];
 };

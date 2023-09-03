@@ -25,72 +25,80 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct Stack
 {
     int top;
-    unsigned capacity;
-    int *array;
+    unsigned cap;
+    int *arr;
 };
 
-struct Stack *createStack(unsigned capacity)
+struct Stack *create_stack(unsigned cap)
 {
-    struct Stack *stack = (struct Stack *)malloc(sizeof(struct Stack));
-    stack->capacity = capacity;
-    stack->top = -1;
-    stack->array = (int *)malloc(stack->capacity * sizeof(int));
-    return stack;
+    struct Stack *newStack = (struct Stack *)malloc(sizeof(struct Stack));
+    newStack->top = -1;
+    newStack->cap = cap;
+    newStack->arr = (int *)malloc(sizeof(int) * newStack->cap);
+
+    return newStack;
 }
 
-int isEmpty(struct Stack *stack)
+bool isEmpty(struct Stack *s)
 {
-    return stack->top == -1;
+    return s->top == -1;
 }
 
-int isFull(struct Stack *stack)
+bool isFull(struct Stack *s)
 {
-    return stack->top == stack->capacity - 1;
+    return s->top == s->cap - 1;
 }
 
-void push(struct Stack *stack, int item)
+void push(struct Stack *s, int val)
 {
-    if (isFull(stack))
+    if (!(isFull(s)))
     {
-        printf("Stack is full. Cannot push %d\n", item);
-        return;
+        s->arr[++s->top] = val;
     }
-    stack->array[++stack->top] = item;
 }
 
-int pop(struct Stack *stack)
+void pop(struct Stack *s)
 {
-    if (isEmpty(stack))
+    if (!(isEmpty(s)))
     {
-        printf("Stack is empty. Cannot pop.\n");
-        return -1;
+        s->arr[s->top--];
     }
-    return stack->array[stack->top--];
 }
 
-int peek(struct Stack *stack)
+int peek(struct Stack *s)
 {
-    if (isEmpty(stack))
+    if (!(isEmpty(s)))
     {
-        printf("Stack is empty. Cannot peek.\n");
-        return -1;
+        return s->arr[s->top];
     }
-    return stack->array[stack->top];
 }
 
-void delStack(struct Stack *stack)
+void del_stack(struct Stack *s)
 {
-    free(stack->array);
-    free(stack);
+    free(s->arr);
+    free(s);
+}
+
+void traverseStack(struct Stack *s)
+{
+    if (!(isEmpty(s)))
+    {
+        printf("Stack elements: ");
+        for (int i = 0; i <= s->top; i++)
+        {
+            printf("%d ", s->arr[i]);
+        }
+    }
 }
 
 int main()
 {
-    struct Stack *stack = createStack(5);
+    struct Stack *stack = create_stack(5);
 
     push(stack, 10);
     push(stack, 20);
@@ -98,8 +106,8 @@ int main()
 
     printf("Top element: %d\n", peek(stack));
 
-    printf("Popped: %d\n", pop(stack));
-    printf("Popped: %d\n", pop(stack));
+    pop(stack);
+    pop(stack);
 
     printf("Top element: %d\n", peek(stack));
 
@@ -108,9 +116,9 @@ int main()
 
     printf("Top element: %d\n", peek(stack));
 
-    printf("Popped: %d\n", pop(stack));
+    traverseStack(stack);
 
-    delStack(stack);
+    del_stack(stack);
 
     return 0;
 }

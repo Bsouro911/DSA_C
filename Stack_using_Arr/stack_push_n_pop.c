@@ -1,55 +1,71 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
-struct stack{
+struct stack
+{
     int size;
     int top;
     int *arr;
 };
 
-int isEmpty(struct stack *ptr){
-    if(ptr -> top == -1){
+int isEmpty(struct stack *ptr)
+{
+    if (ptr->top == -1)
+    {
         return 1;
     }
     return 0;
 }
 
-int isFull(struct stack *ptr){
-    if(ptr -> top == ptr -> size -1){
+int isFull(struct stack *ptr)
+{
+    if (ptr->top == ptr->size - 1)
+    {
         return 1;
     }
     return 0;
 }
 
-void push(struct stack *ptr, int val){
-    if(isFull(ptr)){
+void push(struct stack *ptr, int val)
+{
+    if (isFull(ptr))
+    {
         printf("Stack Overflow!\n");
     }
-    else{
-        ptr -> top++;
-        ptr -> arr[ptr -> top] = val;
+    else
+    {
+        ptr->top++;
+        ptr->arr[ptr->top] = val;
     }
 }
 
-bool pop(struct stack *ptr){
-     if(isEmpty(ptr)){
+bool pop(struct stack *ptr)
+{
+    if (isEmpty(ptr))
+    {
         printf("Stack Underflow!\n");
         return false;
     }
-    else{
-        int val = ptr -> arr[ptr -> top];
-        ptr -> top--;
+    else
+    {
+        int val = ptr->arr[ptr->top];
+        ptr->top--;
         return true;
     }
 }
 
-void display(struct stack *ptr){
-    if (isEmpty(ptr)) {
+void display(struct stack *ptr)
+{
+    if (isEmpty(ptr))
+    {
         printf("Stack is empty!\n");
     }
-    else {
+    else
+    {
         printf("Stack elements: ");
-        for (int i = ptr->top; i >= 0; i--) {
+        for (int i = ptr->top; i >= 0; i--)
+        {
             printf("%d ", ptr->arr[i]);
         }
         printf("\n");
@@ -58,10 +74,10 @@ void display(struct stack *ptr){
 
 int main()
 {
-    struct stack *s = (struct stack *) malloc(sizeof(struct stack));
-    s -> size = 2;
-    s -> top = -1;
-    s -> arr = (int *) malloc(s -> size * sizeof(int));
+    struct stack *s = (struct stack *)malloc(sizeof(struct stack));
+    s->size = 2;
+    s->top = -1;
+    s->arr = (int *)malloc(s->size * sizeof(int));
 
     printf("Empty: %d\n", isEmpty(s));
     printf("Full: %d\n", isFull(s));

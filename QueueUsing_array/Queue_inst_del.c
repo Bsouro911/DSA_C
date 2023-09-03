@@ -1,83 +1,72 @@
 #include <stdio.h>
 #define MAX 10
 
-struct Queue {
+struct Queue
+{
     int arr[MAX];
-    int front, rear;
+    int front, rare;
 };
 
-void initq(struct Queue *);
-void addq(struct Queue *, int);
-int delq(struct Queue *);
+void initQ(struct Queue *q)
+{
+    q->front = q->rare = -1;
+}
 
-int main() {
+void addQ(struct Queue *q, int val)
+{
+    if (!(q->rare == MAX - 1))
+    {
+        q->rare++;
+        q->arr[q->rare] = val;
+    }
+    if (q->front == -1)
+    {
+        q->front = 0;
+    }
+}
+
+void delQ(struct Queue *q)
+{
+    if (!(q->front == -1 || q->front > q->rare))
+    {
+        q->arr[q->front] = 0;
+    }
+    if (q->front == q->rare)
+    {
+        q->front = q->rare = -1;
+    }
+    else
+    {
+        q->front++;
+    }
+}
+
+void traverseQ(struct Queue *q)
+{
+    if (!(q->front == -1))
+    {
+        printf("Queue elements: ");
+        for (int i = q->front; i <= q->rare; i++)
+        {
+            printf("%d ", q->arr[i]);
+        }
+    }
+}
+
+int main()
+{
     struct Queue Q;
     int data;
 
-    initq(&Q); // initialise the Queue
-    addq(&Q, 11);
-    addq(&Q, 12);
-    addq(&Q, 13);
-    addq(&Q, 14);
+    initQ(&Q); // initialise the Queue
+    addQ(&Q, 11);
+    addQ(&Q, 12);
+    addQ(&Q, 13);
+    addQ(&Q, 14);
 
-    data = delq(&Q);
-    if (data != -1)
-        printf("deleted element: %d\n", data);
-
-    data = delq(&Q);
-    if (data != -1)
-        printf("deleted element: %d\n", data);
-
-    data = delq(&Q);
-    if (data != -1)
-        printf("deleted element: %d\n", data);
-
-    data = delq(&Q);
-    if (data != -1)
-        printf("deleted element: %d\n", data);
-
-    data = delq(&Q);
-    if (data != -1)
-        printf("deleted element: %d\n", data);
+    delQ(&Q);
+    delQ(&Q);
+    traverseQ(&Q);
 
     return 0;
-}
-
-void initq(struct Queue *Q) {
-    Q->front = -1;
-    Q->rear = -1;
-}
-
-void addq(struct Queue *Q, int data) {
-    if (Q->rear == MAX - 1) {
-        printf("the queue is full!\n");
-        return;
-    }
-
-    Q->rear++;
-    Q->arr[Q->rear] = data;
-
-    if (Q->front == -1) {
-        Q->front = 0;
-    }
-}
-
-int delq(struct Queue *Q) {
-    int data;
-
-    if (Q->front == -1 || Q->front > Q->rear) {
-        printf("the queue is empty!\n");
-        return -1;
-    }
-
-    data = Q->arr[Q->front];
-    Q->arr[Q->front] = 0;
-
-    if (Q->front == Q->rear) {
-        Q->front = Q->rear = -1;
-    } else {
-        Q->front++;
-    }
-
-    return data;
 }
