@@ -38,15 +38,17 @@ b) Abstract Data Type (ADT) and Data Type:
 ### Applications, Algorithms, and Programs:
 
 - Data structures are used in various applications, ranging from database management systems to video games. They provide efficient solutions for storing and processing data in these applications.
-Algorithms are sets of step-by-step instructions for solving specific problems or performing tasks using data structures. Algorithms are essential for manipulating data efficiently.
-Programs are implementations of algorithms using a programming language. They use data structures to store and manage data.
-The Basic Idea of Pseudo-code:
+- Algorithms are sets of step-by-step instructions for solving specific problems or performing tasks using data structures. Algorithms are essential for manipulating data efficiently.
+- Programs are implementations of algorithms using a programming language. They use data structures to store and manage data.
+
+### The Basic Idea of Pseudo-code:
 
 - Pseudo-code is a high-level description of an algorithm that uses a simplified, human-readable syntax. It is not tied to any specific programming language and helps developers outline the logic of an algorithm before writing actual code.
-Algorithm Efficiency and Analysis:
+
+### Algorithm Efficiency and Analysis:
 
 - Algorithm efficiency refers to how well an algorithm utilizes computational resources, such as time and memory.
-Time and space complexity analysis involves evaluating an algorithm's performance in terms of the time it takes to run and the amount of memory it requires.
-Order notations, such as Big O notation, are used to describe the upper bounds on the growth rates of an algorithm's time and space requirements, helping us compare and choose efficient algorithms for specific tasks.
+- Time and space complexity analysis involves evaluating an algorithm's performance in terms of the time it takes to run and the amount of memory it requires.
+- Order notations, such as Big O notation, are used to describe the upper bounds on the growth rates of an algorithm's time and space requirements, helping us compare and choose efficient algorithms for specific tasks.
 
 
