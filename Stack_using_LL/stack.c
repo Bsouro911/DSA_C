@@ -8,46 +8,101 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+// struct Node
+// {
+//     int data;
+//     struct Node *next;
+// };
+
+// void push(struct Node **top, int val)
+// {
+//     struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+//     if (temp == NULL)
+//     {
+//         printf("Stack Overflow!\n");
+//         return;
+//     }
+//     temp->data = val;
+//     temp->next = *top;
+//     *top = temp;
+// }
+
+// bool pop(struct Node **top)
+// {
+//     if (*top == NULL)
+//     {
+//         printf("Stack is Empty!\n");
+//         return false;
+//     }
+//     struct Node *ptr = *top;
+//     *top = (*top)->next;
+
+//     free(ptr);
+//     return true;
+// }
+
+// void delStack(struct Node **top)
+// {
+//     while (*top != NULL)
+//     {
+//         struct Node *ptr = *top;
+//         *top = (*top)->next;
+//         free(ptr);
+//     }
+// }
+
+// void printStack(struct Node *top)
+// {
+//     struct Node *ptr = top;
+//     while (ptr != NULL)
+//     {
+//         printf("%d\n", ptr->data);
+//         ptr = ptr->next;
+//     }
+// }
+
 struct Node
 {
-    int data;
+    int val;
     struct Node *next;
 };
 
-void push(struct Node **top, int val)
+bool isEmpty(struct Node **top)
 {
-    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
-    if (temp == NULL)
+    if (!(*top == NULL))
     {
-        printf("Stack Overflow!\n");
-        return;
+        return false;
     }
-    temp->data = val;
-    temp->next = *top;
-    *top = temp;
+}
+
+bool isFull(struct Node **top)
+{
+    struct Node *ptr = (struct Node *)malloc(sizeof(struct Node));
+    if (!(ptr == NULL))
+    {
+        return false;
+    }
+}
+
+void push(struct Node **top, int data)
+{
+    if (!(isFull(top)))
+    {
+        struct Node *ptr = (struct Node *)malloc(sizeof(struct Node));
+        ptr->val = data;
+        ptr->next = *top;
+        *top = ptr;
+    }
 }
 
 bool pop(struct Node **top)
 {
-    if (*top == NULL)
+    if (!(isEmpty(top)))
     {
-        printf("Stack is Empty!\n");
-        return false;
-    }
-    struct Node *ptr = *top;
-    *top = (*top)->next;
-
-    free(ptr);
-    return true;
-}
-
-void delStack(struct Node **top)
-{
-    while (*top != NULL)
-    {
-        struct Node *ptr = *top;
+        struct Node *temp = *top;
         *top = (*top)->next;
-        free(ptr);
+        free(temp);
+        return true;
     }
 }
 
@@ -56,7 +111,7 @@ void printStack(struct Node *top)
     struct Node *ptr = top;
     while (ptr != NULL)
     {
-        printf("%d\n", ptr->data);
+        printf("%d ", ptr->val);
         ptr = ptr->next;
     }
 }

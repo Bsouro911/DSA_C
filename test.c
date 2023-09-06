@@ -1,4 +1,4 @@
-#include <stdio.h>
+// #include <stdio.h>
 // int main()
 // {
 //     static int var[5]; // array

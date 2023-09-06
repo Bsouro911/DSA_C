@@ -49,7 +49,12 @@ char pop(struct Stack *s)
     }
 }
 
-int getPrecedence(char operator)
+char peek(struct Stack *stack)
+{
+    return stack->items[stack->top];
+}
+
+int precedence(char operator)
 {
     if (operator== '+' || operator== '-')
         return 1;
@@ -59,72 +64,41 @@ int getPrecedence(char operator)
         return 0;
 }
 
-void infixToPostfix(char infix[], char postfix[])
-{
-    struct Stack stack;
-    initialize(&stack);
-
-    int infixLength = strlen(infix);
-    int postfixIndex = 0;
-
-    for (int i = 0; i < infixLength; i++)
-    {
-        char ch = infix[i];
-
-        if (isalnum(ch))
-        {
-            postfix[postfixIndex++] = ch;
-        }
-        else if (ch == '(')
-        {
-            push(&stack, ch);
-        }
-        else if (ch == ')')
-        {
-            while (!isEmpty(&stack) && stack.items[stack.top] != '(')
-            {
-                postfix[postfixIndex++] = pop(&stack);
-            }
-            pop(&stack); // Pop '('
-        }
-        else
-        { // Operator
-            while (!isEmpty(&stack) && getPrecedence(ch) <= getPrecedence(stack.items[stack.top]))
-            {
-                postfix[postfixIndex++] = pop(&stack);
-            }
-            push(&stack, ch);
-        }
-    }
-
-    while (!isEmpty(&stack))
-    {
-        postfix[postfixIndex++] = pop(&stack);
-    }
-
-    postfix[postfixIndex] = '\0';
-}
-
 int isOperator(char ch)
 {
     return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
 }
 
+void reverseString(char str[])
+{
+    int length = strlen(str);
+    int left = 0;
+    int right = length - 1;
+
+    while (left < right)
+    {
+        char temp = str[left];
+        str[left] = str[right];
+        str[right] = temp;
+        left++;
+        right--;
+    }
+}
+
 void infixToPrefix(char infix[], char prefix[])
 {
+    reverseString(infix);
     struct Stack stack;
     initialize(&stack);
+    int i = 0, j = 0;
 
-    int infixLength = strlen(infix);
-    int prefixIndex = 0;
-
-    for (int i = infixLength - 1; i >= 0; i--)
+    while (infix[i] != '\0')
     {
         char ch = infix[i];
 
         if (isalnum(ch))
         {
-            prefix[prefixIndex++] = ch;
+            prefix[j++] = ch;
         }
         else if (ch == ')')
         {
@@ -132,101 +106,50 @@ void infixToPrefix(char infix[], char prefix[])
         }
         else if (ch == '(')
         {
-            while (!isEmpty(&stack) && stack.items[stack.top] != ')')
+            while (!isEmpty(&stack) && peek(&stack) != ')')
             {
-                prefix[prefixIndex++] = pop(&stack);
+                prefix[j++] = pop(&stack);
             }
-            pop(&stack); // Pop ')'
+            pop(&stack);
         }
         else if (isOperator(ch))
         {
-            while (!isEmpty(&stack) && getPrecedence(ch) < getPrecedence(stack.items[stack.top]))
+            while (!isEmpty(&stack) && precedence(peek(&stack)) >= precedence(ch))
             {
-                prefix[prefixIndex++] = pop(&stack);
+                prefix[j++] = pop(&stack);
             }
             push(&stack, ch);
         }
+
+        i++;
     }
 
     while (!isEmpty(&stack))
     {
-        prefix[prefixIndex++] = pop(&stack);
+        prefix[j++] = pop(&stack);
     }
 
-    prefix[prefixIndex] = '\0';
-
-    // Reverse the prefix string to get the correct order
-    int len = strlen(prefix);
-    for (int i = 0; i < len / 2; i++)
-    {
-        char temp = prefix[i];
-        prefix[i] = prefix[len - i - 1];
-        prefix[len - i - 1] = temp;
-    }
-}
-
-int evaluatePostfix(char postfix[])
-{
-    struct Stack stack;
-    initialize(&stack);
-
-    int postfixLength = strlen(postfix);
-
-    for (int i = 0; i < postfixLength; i++)
-    {
-        char ch = postfix[i];
-
-        if (isdigit(ch))
-        {
-            push(&stack, ch - '0'); // Convert char to int
-        }
-        else if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
-        {
-            int operand2 = pop(&stack);
-            int operand1 = pop(&stack);
-
-            switch (ch)
-            {
-            case '+':
-                push(&stack, operand1 + operand2);
-                break;
-            case '-':
-                push(&stack, operand1 - operand2);
-                break;
-            case '*':
-                push(&stack, operand1 * operand2);
-                break;
-            case '/':
-                push(&stack, operand1 / operand2);
-                break;
-            }
-        }
-    }
-
-    return pop(&stack);
+    prefix[j] = '\0';
+    reverseString(prefix);
 }
 
 int main()
 {
     char infix[100];
-    char postfix[100];
     char prefix[100];
-    char postfixEval[100];
+    // char postfixEval[100];
 
     printf("Enter infix expression: ");
     scanf("%s", infix);
 
-    infixToPostfix(infix, postfix);
-    printf("Postfix expression: %s\n", postfix);
-
     infixToPrefix(infix, prefix);
     printf("Prefix expression: %s\n", prefix);
 
-    printf("Enter postfix expression for Evaluation: ");
-    scanf("%s", postfixEval);
+    // printf("Enter postfix expression for Evaluation: ");
+    // scanf("%s", postfixEval);
 
-    int result = evaluatePostfix(postfixEval);
-    printf("Result of postfix expression: %d\n", result);
+    // int result = evaluatePostfix(postfixEval);
+    // printf("Result of postfix expression: %d\n", result);
 
     return 0;
 }

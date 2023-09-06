@@ -4,63 +4,75 @@
 // stack full condition (when heap memory is exhausted)
 // you can always set a custom size here
 
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-struct Node{
+struct Node
+{
     int data;
     struct Node *next;
 };
 
-void linkedListTraversal(struct Node *ptr){
-    while (ptr != NULL){
-        printf("element : %d\n", ptr -> data);
-        ptr = ptr -> next;
+void linkedListTraversal(struct Node *ptr)
+{
+    while (ptr != NULL)
+    {
+        printf("element : %d\n", ptr->data);
+        ptr = ptr->next;
     }
 }
 
-int isEmpty(struct Node *top){
-    if(top == NULL){
+int isEmpty(struct Node *top)
+{
+    if (top == NULL)
+    {
         return 1;
     }
     return 0;
 }
 
-int isFull(struct Node *top){
-    struct Node *p = (struct Node *) malloc(sizeof(struct Node));
-    if( p == NULL){
+int isFull(struct Node *top)
+{
+    struct Node *p = (struct Node *)malloc(sizeof(struct Node));
+    if (p == NULL)
+    {
         return 1;
     }
     return 0;
 }
 
-struct Node *push(struct Node *top, int x){
-    if(!isFull(top)){
-        struct Node *p = (struct Node *) malloc(sizeof(struct Node));
-        p -> data = x;
-        p -> next = top;
+struct Node *push(struct Node *top, int x)
+{
+    if (!isFull(top))
+    {
+        struct Node *p = (struct Node *)malloc(sizeof(struct Node));
+        p->data = x;
+        p->next = top;
         top = p;
         return top;
     }
-    else{
+    else
+    {
         printf("Stack Overflow!\n");
     }
 }
 
-int peek(struct Node *top, int pos){ // peek can be used for traversing all the element in stack also
+int peek(struct Node *top, int pos)
+{ // peek can be used for traversing all the element in stack also
     struct Node *ptr = top;
-    for(int i = 0; ( i< pos-1 && ptr != NULL); i++){
-        ptr = ptr -> next;
+    for (int i = 0; (i < pos - 1 && ptr != NULL); i++)
+    {
+        ptr = ptr->next;
     }
-    if(ptr != NULL){
-        return ptr -> data;
+    if (ptr != NULL)
+    {
+        return ptr->data;
     }
-    else{
+    else
+    {
         return -1; // assuming all the elements are positive in the stack
     }
-
 }
-
 
 int main()
 
