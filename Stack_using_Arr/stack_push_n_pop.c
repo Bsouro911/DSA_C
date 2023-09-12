@@ -35,8 +35,8 @@ void push(struct stack *ptr, int val)
     }
     else
     {
-        ptr->top++;
-        ptr->arr[ptr->top] = val;
+        // ptr->top++;
+        ptr->arr[++ptr->top] = val;
     }
 }
 
@@ -49,8 +49,8 @@ bool pop(struct stack *ptr)
     }
     else
     {
-        int val = ptr->arr[ptr->top];
-        ptr->top--;
+        ptr->arr[ptr->top--];
+        // ptr->top--;
         return true;
     }
 }

@@ -62,7 +62,6 @@ void traverse(struct Queue *q)
 int main()
 {
     struct Queue Q;
-    struct Node *node;
 
     initQ(&Q);
     enqueue(&Q, 14);
