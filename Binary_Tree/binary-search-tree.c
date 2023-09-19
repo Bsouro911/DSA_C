@@ -142,6 +142,7 @@ int total_internal_node(struct node *tree)
     }
 }
 
+// delete the complete tree
 bool *delete_tree(struct node *tree)
 {
     if (tree != NULL)
@@ -153,7 +154,6 @@ bool *delete_tree(struct node *tree)
 }
 
 // Function to find the smallest and largest element in a BST
-// Function to find the smallest element in a BST
 int find_smallest_element(struct node *tree)
 {
     if ((tree == NULL) || (tree->left == NULL))
@@ -164,8 +164,7 @@ int find_smallest_element(struct node *tree)
         }
         else
         {
-            // Handle the case when the tree is empty
-            return -1; // Assuming INT_MIN represents an empty tree
+            return -1;
         }
     }
     else
@@ -185,8 +184,7 @@ int find_largest_element(struct node *tree)
         }
         else
         {
-            // Handle the case when the tree is empty
-            return -1; // Assuming INT_MIN represents an empty tree
+            return -1;
         }
     }
     else
