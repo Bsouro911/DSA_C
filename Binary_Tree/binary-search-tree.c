@@ -9,75 +9,119 @@ struct node
     struct node *right;
 };
 
-struct node *tree = NULL;
+struct node *root = NULL;
 
-// Function to create a new node
-struct node *create_node(int data)
+struct node *createNode(int data)
 {
-    struct node *new_node = (struct node *)malloc(sizeof(struct node));
-    new_node->data = data;
-    new_node->left = NULL;
-    new_node->right = NULL;
-    return new_node;
+    struct node *newNode = (struct node *)malloc(sizeof(struct node));
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
 }
 
-// Function to insert an element into the BST
-void insert_element(struct node **tree, int data)
+struct node *insert(struct node **root, int data)
 {
-    if (*tree == NULL)
+    if (*root == NULL)
     {
-        *tree = create_node(data);
+        *root = createNode(data);
     }
-    else if (data <= (*tree)->data)
+    else if (data < (*root)->data)
     {
-        insert_element(&((*tree)->left), data);
+        insert(&((*root)->left), data);
     }
     else
     {
-        insert_element(&((*tree)->right), data);
+        insert(&((*root)->right), data);
     }
 }
 
-void preorder_traversal(struct node *tree)
+void inorder(struct node *root)
 {
-    if (tree != NULL)
+    if (root != NULL)
     {
-        printf("%d\t", tree->data);
-        preorder_traversal(tree->left);
-        preorder_traversal(tree->right);
+        inorder(root->left);
+        printf("%d", root->data);
+        inorder(root->right);
     }
 }
 
-// Function to perform inorder traversal with tree structure
-void inorder_traversal(struct node *tree)
+void preorder(struct node *root)
 {
-    if (tree != NULL)
+    if (root != NULL)
     {
-        inorder_traversal(tree->left);
-        printf("%d\t", tree->data);
-        inorder_traversal(tree->right);
+        printf("%d", root->data);
+        preorder(root->left);
+        preorder(root->right);
     }
 }
 
-// Function to perform postorder traversal with tree structure
-void postorder_traversal(struct node *tree)
+void postorder(struct node *root)
 {
-    if (tree != NULL)
+    if (root != NULL)
     {
-        postorder_traversal(tree->left);
-        postorder_traversal(tree->right);
-        printf("%d\t", tree->data);
+        postorder(root->left);
+        postorder(root->right);
+        printf("%d", root->data);
     }
 }
 
-int tree_height(struct node *root)
+struct node *findMin(struct node *root)
 {
+    while (root->left != NULL)
+    {
+        root = root->left;
+    }
+    return root;
+}
+
+void delete(struct node **root, int data)
+{
+    if (*root == NULL)
+        return;
+
+    if (data < (*root)->data)
+    {
+        delete (&((*root)->left), data);
+    }
+    else if (data > (*root)->data)
+    {
+        delete (&((*root)->right), data);
+    }
+
+    else
+    {
+        if ((*root)->left == NULL)
+        {
+            struct node *temp = *root;
+            *root = (*root)->right;
+            free(temp);
+        }
+        else if ((*root)->right == NULL)
+        {
+            struct node *temp = *root;
+            *root = (*root)->left;
+            free(temp);
+        }
+        else
+        {
+            struct node *temp = findMin((*root)->right);
+            (*root)->data = temp->data;
+            delete (&((*root)->right), temp->data);
+        }
+    }
+}
+
+int height(struct node *root)
+{
+    int left_height, right_height;
+
     if (!root)
         return 0;
     else
     {
-        int left_height = tree_height(root->left);
-        int right_height = tree_height(root->right);
+        left_height = height(root->left);
+        right_height = height(root->right);
+
         if (left_height >= right_height)
             return left_height + 1;
         else
@@ -85,143 +129,120 @@ int tree_height(struct node *root)
     }
 }
 
-void mirror_image(struct node *tree)
+int totalNodes(struct node *root)
 {
-    struct node *ptr;
-    if (tree != NULL)
-    {
-        mirror_image(tree->left);
-        mirror_image(tree->right);
-
-        // swaping
-        ptr = tree->left;
-        ptr->left = ptr->right;
-        tree->right = ptr;
-    }
-}
-
-int total_nodes(struct node *tree)
-{
-    if (tree == NULL)
-    {
+    if (root == NULL)
         return 0;
-    }
     else
-    {
-        return (total_nodes(tree->left) + total_nodes(tree->right) + 1);
-    }
+        return totalNodes(root->left) + totalNodes(root->right) + 1;
 }
 
-// total number of leaf nodes
-int total_external_node(struct node *tree)
+int internalNodes(struct node *root)
 {
-    if (tree == NULL)
-    {
+    if ((root == NULL) || ((root->left == NULL) && (root->right == NULL)))
         return 0;
-    }
-    else if (tree->left == NULL && tree->right == NULL)
-    {
+    else
+        return ((internalNodes(root->left) + internalNodes(root->right)) + 1);
+}
+
+int externalNodes(struct node *root)
+{
+    if (root == NULL)
+        return 0;
+    else if ((root->right == NULL) && (root->left == NULL))
         return 1;
-    }
     else
-    {
-        return (total_external_node(tree->left) + total_external_node(tree->right));
-    }
+        return (externalNodes(root->left) + externalNodes(root->right));
 }
 
-// total number of nodes - total number of leaf nodes
-int total_internal_node(struct node *tree)
+int smallestElement(struct node *root)
 {
-    if ((tree == NULL) || ((tree->left == NULL) && (tree->right == NULL)))
+    if (root == NULL || root->left == NULL)
     {
-        return 0;
-    }
-    else
-    {
-        return ((total_internal_node(tree->left) + total_internal_node(tree->right)) + 1);
-    }
-}
-
-// delete the complete tree
-bool *delete_tree(struct node *tree)
-{
-    if (tree != NULL)
-    {
-        delete_tree(tree->left);
-        delete_tree(tree->right);
-        free(tree);
-    }
-}
-
-// Function to find the smallest and largest element in a BST
-int find_smallest_element(struct node *tree)
-{
-    if ((tree == NULL) || (tree->left == NULL))
-    {
-        if (tree != NULL)
-        {
-            return tree->data;
-        }
+        if (root != NULL)
+            return root->data;
         else
-        {
             return -1;
-        }
     }
     else
-    {
-        return find_smallest_element(tree->left);
-    }
+        return smallestElement(root->left);
 }
 
-// Function to find the largest element in a BST
-int find_largest_element(struct node *tree)
+int largestElement(struct node *root)
 {
-    if ((tree == NULL) || (tree->right == NULL))
+    if (root == NULL || root->right == NULL)
     {
-        if (tree != NULL)
-        {
-            return tree->data;
-        }
+        if (root != NULL)
+            return root->data;
         else
-        {
             return -1;
-        }
     }
     else
+        return largestElement(root->right);
+}
+
+struct node *lowestCommonAncestor(struct node *root, struct node *p, struct node *q)
+{
+    if (root == NULL)
+        return NULL;
+    int curr = root->data;
+    if (curr < p->data && curr < q->data)
+        return lowestCommonAncestor(root->right, p, q);
+    if (curr > p->data && curr > q->data)
+        return lowestCommonAncestor(root->left, p, q);
+
+    return root;
+}
+
+bool deleteTree(struct node *root)
+{
+    if (root != NULL)
     {
-        return find_largest_element(tree->right);
+        deleteTree(root->right);
+        deleteTree(root->right);
+        free(root);
     }
 }
 
 int main()
 {
-    int val;
+    insert(&root, 5);
+    insert(&root, 6);
+    insert(&root, 8);
+    insert(&root, 4);
+    insert(&root, 9);
+    insert(&root, 7);
+    insert(&root, 2);
 
-    insert_element(&tree, 5);
-    insert_element(&tree, 6);
-    insert_element(&tree, 8);
-    insert_element(&tree, 4);
-    insert_element(&tree, 9);
-    insert_element(&tree, 7);
-    insert_element(&tree, 2);
-
-    preorder_traversal(tree);
+    preorder(root);
     printf("\n");
-    inorder_traversal(tree);
+    inorder(root);
     printf("\n");
-    postorder_traversal(tree);
+    postorder(root);
     printf("\n");
 
-    printf("%d\n", tree_height(tree));
+    printf("%d\n", height(root));
 
-    printf("%d\n", total_nodes(tree));
-    printf("%d\n", total_internal_node(tree));
-    printf("%d\n", total_external_node(tree));
+    printf("%d\n", totalNodes(root));
+    printf("%d\n", internalNodes(root));
+    printf("%d\n", externalNodes(root));
 
-    printf("%d\n", find_largest_element(tree));  // 9
-    printf("%d\n", find_smallest_element(tree)); // 2
+    printf("%d\n", largestElement(root));  // 9
+    printf("%d\n", smallestElement(root)); // 2
 
-    if (delete_tree(tree))
+    struct node *node7 = root->right->right->right;
+    struct node *node9 = root->right->right->left;
+
+    struct node *lca = lowestCommonAncestor(root, node7, node9);
+
+    printf("Lowest Common Ancestor: %d\n", lca->data);
+
+    delete (&root, 9);
+    inorder(root);
+
+    printf("\n");
+
+    if (deleteTree(root))
         printf("done!");
 
     return 0;

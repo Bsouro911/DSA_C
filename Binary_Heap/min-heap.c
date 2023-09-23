@@ -8,7 +8,7 @@ void swap(int *a, int *b)
 }
 
 // 0 - based indexing
-// Max Heap
+// Min Heap
 void heapify(int arr[], int size, int i)
 {
     int smallest, left_child, right_child;
