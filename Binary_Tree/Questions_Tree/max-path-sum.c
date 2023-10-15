@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Definition for a binary tree node.
 struct TreeNode
 {
     int val;
@@ -44,7 +43,6 @@ int maxPathSumHelper(struct TreeNode *root, int *maxSum)
     return currentMax;
 }
 
-// Function to find the maximum path sum between any two nodes in a binary tree
 int maxPathSum(struct TreeNode *root)
 {
     int maxSum = root->val; // Initialize maxSum with the root's value
@@ -65,10 +63,7 @@ int main()
     root->right->right->right = create_node(4);
 
     int result = maxPathSum(root);
-    printf("Maximum path sum: %d\n", result); // Output: 42 (the path is 3 -> -25 -> 4 -> 10)
-
-    // Free dynamically allocated memory
-    // (You can create a separate function to handle freeing memory if needed)
+    printf("Maximum path sum: %d\n", result); // Output: 42
     free(root->right->right->right);
     free(root->right->right->left);
     free(root->right->right);
