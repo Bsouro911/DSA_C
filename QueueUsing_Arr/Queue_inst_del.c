@@ -1,16 +1,16 @@
 #include <stdio.h>
 #define MAX 10
 
-struct Queue
-{
-    int arr[MAX];
-    int front, rare;
-};
+// struct Queue
+// {
+//     int arr[MAX];
+//     int front, rare;
+// };
 
-void initQ(struct Queue *q)
-{
-    q->front = q->rare = -1;
-}
+// void initQ(struct Queue *q)
+// {
+//     q->front = q->rare = -1;
+// }
 
 void addQ(struct Queue *q, int val)
 {
