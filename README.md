@@ -77,38 +77,50 @@ Overall, Linked Lists are fundamental data structures known for their flexibilit
 
 ### Stack
 
-Introduction
-A stack is a fundamental data structure that follows the Last-In, First-Out (LIFO) principle. It's analogous to a stack of books, where you can only add or remove books from the top. In computing, a stack is widely used due to its simplicity and efficiency in managing data.
+## Introduction
 
-Operations
-Push: Adding an element to the top of the stack.
-Pop: Removing the topmost element from the stack.
-Peek/Top: Viewing the top element without removing it.
-isEmpty: Checking if the stack is empty.
-Size: Determining the number of elements in the stack.
-Implementation
-Data Structure:
-A stack can be implemented using arrays or linked lists. Both have their own advantages:
+> A stack is a fundamental data structure that follows the Last-In, First-Out (LIFO) principle. It's analogous to a stack of books, where you can only add or remove books from the top. In computing, a stack is widely used due to its simplicity and efficiency in managing data.
 
-Array-based implementation: Utilizes an array with a fixed or dynamic size to store stack elements. It's efficient in terms of access but might require resizing for dynamic allocation.
-Linked list-based implementation: Uses a linked list structure where each element (node) points to the next element. It allows for dynamic allocation of memory but might have slightly higher overhead due to pointers.
-Operations:
-Push: To add an element to the stack:
-For an array-based implementation, increment the stack pointer and insert the element at that index.
-For a linked list-based implementation, create a new node, update pointers, and make it the new top.
-Pop: To remove the top element from the stack:
-For an array-based implementation, decrement the stack pointer to remove the element.
-For a linked list-based implementation, remove the top node and update pointers.
-Peek: To view the top element without removing it:
-Return the element at the top of the array-based stack or the value stored in the top node of the linked list-based stack.
-isEmpty: To check if the stack is empty:
-Return true if the stack is empty (stack pointer is at -1 or top is NULL for array and linked list-based stacks, respectively).
-Size: To determine the number of elements in the stack:
-Return the value of the stack pointer for array-based stacks or count the nodes in a linked list-based stack.
-Applications
-Stacks are used extensively in various computer science domains:
+## Operations
 
-Expression evaluation: Used in converting infix expressions to postfix or prefix form for evaluation.
-Function call management: Stores function calls and local variables in programming languages.
-Undo mechanisms in text editors: Keeps track of changes to allow for undoing.
-Backtracking algorithms: Facilitates backtracking in algorithms like depth-first search.
+- Push: Adding an element to the top of the stack.
+- Pop: Removing the topmost element from the stack.
+- Peek/Top: Viewing the top element without removing it.
+- isEmpty: Checking if the stack is empty.
+- Size: Determining the number of elements in the stack.
+
+## Implementation
+
+### Data Structure:
+> A stack can be implemented using arrays or linked lists. Both have their own advantages:
+
+- Array-based implementation: Utilizes an array with a fixed or dynamic size to store stack elements. It's efficient in terms of access but might require resizing for dynamic allocation.
+- Linked list-based implementation: Uses a linked list structure where each element (node) points to the next element. It allows for dynamic allocation of memory but might have slightly higher overhead due to pointers.
+
+## Operations:
+
+- Push: To add an element to the stack:
+-- For an array-based implementation, increment the stack pointer and insert the element at that index.
+-- For a linked list-based implementation, create a new node, update pointers, and make it the new top.
+
+- Pop: To remove the top element from the stack:
+-- For an array-based implementation, decrement the stack pointer to remove the element.
+-- For a linked list-based implementation, remove the top node and update pointers.
+
+- Peek: To view the top element without removing it:
+-- Return the element at the top of the array-based stack or the value stored in the top node of the linked list-based stack.
+
+- isEmpty: To check if the stack is empty:
+-- Return true if the stack is empty (stack pointer is at -1 or top is NULL for array and linked list-based stacks, respectively).
+
+- Size: To determine the number of elements in the stack:
+-- Return the value of the stack pointer for array-based stacks or count the nodes in a linked list-based stack.
+
+## Applications
+
+- Stacks are used extensively in various computer science domains:
+
+### Expression evaluation: Used in converting infix expressions to postfix or prefix form for evaluation.
+- Function call management: Stores function calls and local variables in programming languages.
+- Undo mechanisms in text editors: Keeps track of changes to allow for undoing.
+- Backtracking algorithms: Facilitates backtracking in algorithms like depth-first search.
