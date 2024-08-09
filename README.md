@@ -1,6 +1,6 @@
 ### DSA_C
 
-# Topics include/will be included
+# Topics included
 
 - Linked Lists
 - Stack
